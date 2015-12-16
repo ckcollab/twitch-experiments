@@ -1,4 +1,6 @@
 import av
+import logging
+import random
 import sys
 import time
 import warnings
@@ -9,19 +11,26 @@ from experiments.test_detecting_in_lol_or_not import get_classifier, process_ima
 from ocr import ocr_image
 
 
+logging.getLogger("libav.http").setLevel(logging.ERROR)
+
 # Hide warnings from SKLearn from flooding screen
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print "Please specify a streamer to monitor (python stream_frame_identifier.py day9)"
-        exit(-1)
-
-    streamer = sys.argv[1]
+    if len(sys.argv) > 1:
+        streamer = sys.argv[1]
+    else:
+        print "Randomly selecting a streamer..."
+        streamer = random.choice((
+            "tsm_doublelift",
+            "grossie_gore",
+            "wingsofdeath"
+        ))
 
     classifier = get_classifier()
     is_in_lol = False
+
+    print "Waiting for streamer %s to join a game..." % streamer
 
     while True:
         session = Livestreamer()

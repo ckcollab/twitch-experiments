@@ -208,7 +208,7 @@ def train(training_path_a, training_path_b, print_metrics=True):
 def get_classifier(training_path_a=None, training_path_b=None):
     classifier_file_name = os.path.join(os.path.dirname(__file__), 'lol_or_not_classifier.pkl')
     if os.path.exists(classifier_file_name):
-        print("Loading existing classifier @ %s" % classifier_file_name)
+        #print("Loading existing classifier @ %s" % classifier_file_name)
         classifier = joblib.load(classifier_file_name)
     else:
         assert training_path_a, "No existing classifier file found so training_path_a argument is required"
